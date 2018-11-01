@@ -1,9 +1,9 @@
 package com.example.demopojocrud.models;
 
 public class User {
-    Integer id;
-    String name;
-    String gender;
+    private Integer id;
+    private String name;
+    private String gender;
 
     public User() {
     }
