@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new user</title>
+</head>
+<body>
+    <h2> Add new user form</h2>
+    <!--the /user/add/submit is another controller for handle the submit form-->
+    <!--use the method post in html-->
+    <form action="/user/add/submit" method="post" th:object="${user}">
+        ID: <input type="number" th:field="*{id}"><br>
+        <span style="color: red;" th:if="${#fields.hasErrors('id')}" th:text="${#fields.errors('id')[0]}"></span>
+
+        <br>
+        <br>
+        Name: <input type="text" th:field="*{name}"><br>
+        <span style="color: red;" th:if="${#fields.hasErrors('name')}" th:text="${#fields.errors('name')}"></span>
+
+        <br>
+        <br>
+        <select th:field="*{gender}">
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+        </select>
+        <br>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+</html>

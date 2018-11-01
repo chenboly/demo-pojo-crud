@@ -1,14 +1,23 @@
 package com.example.demopojocrud.models;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class User {
+
+    @NotNull(message = "Not null error custom!")
     private Integer id;
+
+    @NotBlank
+    @NotEmpty
     private String name;
     private String gender;
 
     public User() {
     }
 
-    public User(Integer id, String name, String gender) {
+    public User(@NotNull(message = "Not null error custom!") Integer id, @NotBlank @NotEmpty String name, String gender) {
         this.id = id;
         this.name = name;
         this.gender = gender;
