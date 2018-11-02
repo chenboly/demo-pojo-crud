@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" media="screen"
+          th:href="@{/css/bootstrap-3.3.4-dist/css/bootstrap.min.css}"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/js/jquery-2.1.4.min.js}"></script>
+
     <script>
         $(document).ready(function () {
 
@@ -25,23 +32,50 @@
     <a href="/user/add">Add new user</a>
     <br>
     <br>
-    <table border="1">
+    <div class="container">
+    <table class="table table-striped">
+        <thead>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Gender</th>
-            <th>Action</th>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Action</th>
         </tr>
-        <tr th:each=" u : ${userList}">
+        </thead>
+        <tbody>
+        <tr th:each="u:${userList}">
             <td th:text="${u.getId()}"></td>
             <td th:text="${u.getName()}"></td>
-            <td th:text="${u.getGender()}"></td>
+            <td th:text="${u.getName()}"></td>
             <td>
-                <a th:href="@{/user/one/{user_id}(user_id = ${u.getId()})}">view</a>
-                <a th:href="@{/user/update/{id}(id=${u.getId()})}">update</a>
+                <a th:href="@{/user/one/{user_id} (user_id = ${u.getId()})}">View</a>
+                <a th:href="@{/user/update/{id}(id=${u.getId()})}">Update</a>
                 <button th:attr="data-id=${u.getId()}" class="btn-delete">Delete</button>
+
             </td>
         </tr>
+
+        </tbody>
     </table>
+    </div>
+
+    <!--<table border="1">-->
+        <!--<tr>-->
+            <!--<th>ID</th>-->
+            <!--<th>Name</th>-->
+            <!--<th>Gender</th>-->
+            <!--<th>Action</th>-->
+        <!--</tr>-->
+        <!--<tr th:each=" u : ${userList}">-->
+            <!--<td th:text="${u.getId()}"></td>-->
+            <!--<td th:text="${u.getName()}"></td>-->
+            <!--<td th:text="${u.getGender()}"></td>-->
+            <!--<td>-->
+                <!--<a th:href="@{/user/one/{user_id}(user_id = ${u.getId()})}">view</a>-->
+                <!--<a th:href="@{/user/update/{id}(id=${u.getId()})}">update</a>-->
+                <!--<button th:attr="data-id=${u.getId()}" class="btn-delete">Delete</button>-->
+            <!--</td>-->
+        <!--</tr>-->
+    <!--</table>-->
 </body>
 </html>
