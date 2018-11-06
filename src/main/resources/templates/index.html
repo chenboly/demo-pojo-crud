@@ -29,10 +29,18 @@
 <body>
     <!--[[${userList}]]-->
     <!--<h1 th:text="${userList}"></h1>-->
-    <a href="/user/add">Add new user</a>
+    <div class="container">
+        <div class="row">
+            <a href="?language=km">ខ្មែរ</a>
+            <a href="?language=en">English</a>
+        </div>
+
+    </div>
+
     <br>
     <br>
     <div class="container">
+        <a href="/user/add" th:text="#{addnew}">Add new user</a>
     <table class="table table-striped">
         <thead>
         <tr>
