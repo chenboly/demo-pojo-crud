@@ -25,6 +25,7 @@ public class MultipleLanguageConfig implements WebMvcConfigurer {
         return sessionLocaleResolver;
     }
 
+    //this method for define the language parameter
     @Bean
     @Description("Add change language parameter")
     public LocaleChangeInterceptor localeChangeInterceptor(){
@@ -35,6 +36,7 @@ public class MultipleLanguageConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+
         registry.addInterceptor(localeChangeInterceptor());
     }
 }
