@@ -15,14 +15,16 @@ public class User {
     @NotEmpty
     private String name;
     private String gender;
+    private String profile;
 
     public User() {
     }
 
-    public User(@NotNull(message = "Not null error custom!") Integer id, @NotBlank @NotEmpty String name, String gender) {
+    public User(@NotNull Integer id, @NotBlank @NotEmpty String name, String gender, String profile) {
         this.id = id;
         this.name = name;
         this.gender = gender;
+        this.profile = profile;
     }
 
     public Integer getId() {
@@ -49,8 +51,21 @@ public class User {
         this.gender = gender;
     }
 
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", name='" + name + '\'' + ", gender='" + gender + '\'' + '}';
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", profile='" + profile + '\'' +
+                '}';
     }
 }

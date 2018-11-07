@@ -49,17 +49,21 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Gender</th>
-            <th scope="col">Action</th>
+            <th scope="col" th:text="#{table.id}">ID</th>
+            <th scope="col" th:text="#{table.profile}"></th>
+            <th scope="col"th:text="#{table.name}">Name</th>
+            <th scope="col" th:text="#{table.gender}">Gender</th>
+            <th scope="col" th:text="#{table.action}">Action</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="u:${userList}">
             <td th:text="${u.getId()}"></td>
+            <td>
+                <img style="width: 75px; height: 75px; border: 1px; solid-color: #005cbf" th:src="|/images/${u.getProfile()}|" alt="">
+            </td>
             <td th:text="${u.getName()}"></td>
-            <td th:text="${u.getName()}"></td>
+            <td th:text="${u.getGender()}"></td>
             <td>
                 <a th:href="@{/user/one/{user_id} (user_id = ${u.getId()})}">View</a>
                 <a th:href="@{/user/update/{id}(id=${u.getId()})}">Update</a>
@@ -71,24 +75,5 @@
         </tbody>
     </table>
     </div>
-
-    <!--<table border="1">-->
-        <!--<tr>-->
-            <!--<th>ID</th>-->
-            <!--<th>Name</th>-->
-            <!--<th>Gender</th>-->
-            <!--<th>Action</th>-->
-        <!--</tr>-->
-        <!--<tr th:each=" u : ${userList}">-->
-            <!--<td th:text="${u.getId()}"></td>-->
-            <!--<td th:text="${u.getName()}"></td>-->
-            <!--<td th:text="${u.getGender()}"></td>-->
-            <!--<td>-->
-                <!--<a th:href="@{/user/one/{user_id}(user_id = ${u.getId()})}">view</a>-->
-                <!--<a th:href="@{/user/update/{id}(id=${u.getId()})}">update</a>-->
-                <!--<button th:attr="data-id=${u.getId()}" class="btn-delete">Delete</button>-->
-            <!--</td>-->
-        <!--</tr>-->
-    <!--</table>-->
 </body>
 </html>

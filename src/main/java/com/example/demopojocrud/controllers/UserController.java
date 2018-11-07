@@ -3,20 +3,35 @@ package com.example.demopojocrud.controllers;
 
 import com.example.demopojocrud.models.User;
 import com.example.demopojocrud.services.UserService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
+//the @PropertySource annotation use for call the property file
+@PropertySource("classpath:/project_file.properties")
 public class UserController {
     private UserService userService;
+    //set value (path) for variable SERVER_PATH;
+    @Value("${server.path}")
+    private String SERVER_PATH;
+    @Value("${client.path}")
+    private String CLIENT_PATH;
+
 
     public UserController(UserService userService) {
 
@@ -50,14 +65,34 @@ public class UserController {
     //the controller for get the information sent from html add-user form
     //if the form method using method="post" then spring controller need to use PostMapping
     @PostMapping("/user/add/submit")
-    public String submitUserAdded(@Valid User user, BindingResult bindingResult) {
+    public String submitUserAdded(@Valid User user, BindingResult bindingResult, @RequestParam("my-file") MultipartFile file) {
         //set date input validation
 
         if (bindingResult.hasErrors()) {
             System.out.println("Error occur");
             return "add-user";
         }
+        //create directory if not exist
+        File path = new File(SERVER_PATH);
+        if(!path.exists())
+            path.mkdirs();
 
+        //create new random file name
+        String fileName = file.getOriginalFilename();
+        String extension = fileName.substring(fileName.lastIndexOf(".png"));
+        fileName = UUID.randomUUID() + "." +extension;
+        System.out.println(extension);
+        System.out.println(fileName);
+
+        //copy file from pc to server
+        try {
+            Files.copy(file.getInputStream(), Paths.get(SERVER_PATH, fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //path fileName to setProfile field
+        user.setProfile(fileName);
         System.out.println(user);
         this.userService.saveUser(user);
         return "redirect:/user/all";//return to index after save

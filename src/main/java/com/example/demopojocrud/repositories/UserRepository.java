@@ -12,11 +12,11 @@ public class UserRepository {
 
     List<User> userList = new ArrayList<>();
     {
-        userList.add(new User(1, "Boly", "Male"));
-        userList.add(new User(2, "Vandy", "Female"));
-        userList.add(new User(3, "Kimsay", "Male"));
-        userList.add(new User(4, "Kimseng", "Male"));
-        userList.add(new User(5, "Yat", "Male"));
+        userList.add(new User(1, "Boly", "Male", "Profile"));
+        userList.add(new User(2, "Vandy", "Female", "Profile"));
+        userList.add(new User(3, "Kimsay", "Male", "Profile"));
+        userList.add(new User(4, "Kimseng", "Male", "Profile"));
+        userList.add(new User(5, "Yat", "Male", "Profile"));
     }
 
     public List<User> getAll(){
