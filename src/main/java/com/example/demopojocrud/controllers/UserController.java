@@ -3,6 +3,8 @@ package com.example.demopojocrud.controllers;
 
 import com.example.demopojocrud.models.User;
 import com.example.demopojocrud.services.UserService;
+import com.example.demopojocrud.services.implemetation.FileUploadService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
@@ -22,13 +24,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-//the @PropertySource annotation use for call the property file
-@PropertySource("classpath:/project_file.properties")
+
 public class UserController {
     private UserService userService;
-    //set value (path) for variable SERVER_PATH;
-    @Value("${server.path}")
-    private String SERVER_PATH;
+    @Autowired
+    private FileUploadService fileUploadService;
+
     @Value("${client.path}")
     private String CLIENT_PATH;
 
@@ -65,33 +66,14 @@ public class UserController {
     //the controller for get the information sent from html add-user form
     //if the form method using method="post" then spring controller need to use PostMapping
     @PostMapping("/user/add/submit")
-    public String submitUserAdded(@Valid User user, BindingResult bindingResult, @RequestParam("my-file") MultipartFile file) {
+    public String submitUserAdded(@Valid User user, BindingResult bindingResult, @RequestParam("my-file") MultipartFile file, @RequestParam("folder") String folder) {
         //set date input validation
 
         if (bindingResult.hasErrors()) {
             System.out.println("Error occur");
             return "add-user";
         }
-        //create directory if not exist
-        File path = new File(SERVER_PATH);
-        if(!path.exists())
-            path.mkdirs();
-
-        //create new random file name
-        String fileName = file.getOriginalFilename();
-        String extension = fileName.substring(fileName.lastIndexOf(".png"));
-        fileName = UUID.randomUUID() + "." +extension;
-        System.out.println(extension);
-        System.out.println(fileName);
-
-        //copy file from pc to server
-        try {
-            Files.copy(file.getInputStream(), Paths.get(SERVER_PATH, fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        //path fileName to setProfile field
+        String fileName = this.fileUploadService.upload(file, folder);
         user.setProfile(fileName);
         System.out.println(user);
         this.userService.saveUser(user);
